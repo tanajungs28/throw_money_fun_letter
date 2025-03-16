@@ -1,0 +1,124 @@
+#member_image_area{
+    height: 20%;
+    margin-top: 1%;
+    margin-bottom: 1%;
+}
+
+.image_name_block{
+    margin-left: 30%;
+    text-align: center;
+    display: flex;
+}
+
+#member_img{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+
+
+.member_name{
+    padding-top: 40px;
+    padding-bottom: 40px;
+    padding-left: 50px;
+    font-size: 30px;
+    color: gray;
+}
+
+.messeage_title{
+    text-align: center;
+    margin-top: 10px;
+}
+
+#comment{
+    height: 100px;
+}
+
+.throw_money_area{
+    text-align: center;
+    padding: 0.5em 1em;
+    margin: 2em auto;
+    font-weight: bold;
+    color: #6091d3;/*文字色*/
+    background: #FFF;
+    border: solid 3px #6091d3;/*線*/
+    border-radius: 10px;/*角の丸み*/
+    width: 50%;
+}
+
+.selectbox-5 {
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.selectbox-5::after {
+    position: absolute;
+    right: 15px;
+    width: 10px;
+    height: 7px;
+    background-color: #535353;
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+    content: '';
+    pointer-events: none;
+}
+
+.selectbox-5 select {
+    appearance: none;
+    min-width: 230px;
+    height: 2.8em;
+    padding: .4em calc(.8em + 30px) .4em .8em;
+    border: none;
+    border-bottom: 2px solid #d0d0d0;
+    background-color: #fff;
+    color: #333333;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+.selectbox-5 select:focus {
+    outline: none;
+}
+
+#send_btn_area {
+    /* margin-left: 40%; */
+}
+
+
+.send_btn {
+    width: 30%;
+    background: #eee;
+    border-radius: 9999px;
+    justify-content: space-around;
+    align-items: center;
+    margin: 0 auto;
+    max-width: 250px;
+    padding: 10px 25px;
+    font-family: "Noto Sans Japanese";
+    color: #333333;
+    line-height: 1.8;
+    text-decoration: none;
+    transition: 0.3s ease-in-out;
+    font-weight: 500;
+}
+.send_btn:hover {
+    background: #333333;
+    color: #FFF;
+}
+.send_btn:after {
+    content: '';
+    width: 5px;
+    height: 5px;
+    border-top: 3px solid #333333;
+    border-right: 3px solid #333333;
+    transform: rotate(45deg) translateY(-50%);
+    /* position: absolute; */
+    top: 50%;
+    right: 20px;
+    border-radius: 1px;
+    transition: 0.3s ease-in-out;
+}
+.send_btn:hover:after {
+    border-color: #FFF;
+}
