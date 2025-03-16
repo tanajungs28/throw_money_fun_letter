@@ -1,7 +1,7 @@
 <?php
 require 'vendor/autoload.php'; // Stripeライブラリを読み込む
 
-\Stripe\Stripe::setApiKey('sk_test_51R3ARSLvX4xkEJEVRhiSMZRO6q1TYmhXeQiqY6BXxdasEnoB6tkyQk87HUrBrQAmNOIQa20966zjAXGGrSBVLurs00KpQZ65cc'); // あなたの秘密キーを設定
+\Stripe\Stripe::setApiKey(''); // あなたの秘密キーを設定
 
 $session = \Stripe\Checkout\Session::create([
     'payment_method_types' => ['card'],
