@@ -107,7 +107,7 @@
     </header>
     
     <main>
-    <div class=sidemenue>side_menue</div>
+    <!-- <div class=sidemenue>side_menue</div> -->
     <div class=content>
     <!--アイドルグループの基本ページ（グループ名・写真）  -->
     <div id="group_image_area">

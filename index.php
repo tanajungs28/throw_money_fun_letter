@@ -100,7 +100,7 @@ if ($status === false) {
     </header>
 
     <main>
-    <div class=sidemenue>side_menue</div>
+    <!-- <div class=sidemenue>side_menue</div> -->
     <div class=content>
      <div class="toppic_area">
       <img class="toppic" src="./pic/top2.jpg" alt="">
