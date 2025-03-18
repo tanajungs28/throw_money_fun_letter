@@ -38,8 +38,8 @@
         $error = $stmt->errorInfo();
         exit('ErrorMessage:'.$error[2]);
     }else{
-        //５．profile_edit.phpへリダイレクト
-        header('Location: index.php');
+        //５．login.phpへリダイレクト
+        header('Location: login.php');
     
     }
 

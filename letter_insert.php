@@ -7,8 +7,11 @@ $message = $_POST['message'];
 $member_id = $_POST['member_id'];
 $amount = $_POST['amount'];
 $status = $_POST['status'];
-// $group_name_id = $_POST['group_name_id'];
 
+session_start();
+// if (isset($_POST['amount'])) { 
+  $_SESSION['amount'] = $amount; // スライダーの値を更新
+// }
 
 if (!$message || !$amount || !$status || !$member_id) {
   echo json_encode(['success' => false, 'message' => '入力が不足しています']);
@@ -25,12 +28,12 @@ $pdo = localdb_conn(); //ローカル環境
 // 1. SQL文を用意
 $stmt = $pdo->prepare(
                     "INSERT INTO 
-                        letter_list(
-                            id, user_id, member_id, message, amount, status, created_at
-                        ) 
-                        VALUES(
-                            NULL, :user_id, :member_id, :message, :amount, :status, NOW()
-                        );"
+                      letter_list(
+                      id, user_id, member_id, message, amount, status, created_at
+                      ) 
+                      VALUES(
+                      NULL, :user_id, :member_id, :message, :amount, :status, NOW()
+                      );"
                       );
 
 //  2. バインド変数を用意(セキュリティ対策で変数を1個かませる)

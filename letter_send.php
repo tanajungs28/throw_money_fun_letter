@@ -5,14 +5,14 @@
         require_once('funcs.php');
         $pdo = localdb_conn(); //ローカル環境
         
-        // GET パラメータからグループIDを取得
+        // GET パラメータからメンバーIDを取得
         $member_id = $_GET['member_id'] ?? null;
 
         if ($member_id === null) {
             exit('Error: group_id is missing.');
         }
 
-        // 1. アイドルグループ名を取得
+        // 1. メンバー名を取得
         $member_name_stmt = $pdo->prepare(
             'SELECT member_name,member_image 
             FROM member_list 
@@ -33,7 +33,7 @@
         //２．データ登録SQL作成
         $stmt = $pdo->prepare
                     (
-                    'SELECT letter_list.message,letter_list.id
+                    'SELECT letter_list.message,letter_list.id,letter_list.amount
                     FROM letter_list
                     WHERE member_id = :member_id');
         $stmt->bindValue(':member_id', $member_id, PDO::PARAM_INT);
@@ -51,6 +51,7 @@
             //1行ずつデータベースから結果を取り出して配列に格納($resultは連想配列)
             while ($result = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 $messages[] = $result['message'];
+                $amounts[] = $result['amount'];
                 $ids[] = $result['id'];
             }
         }
@@ -132,21 +133,20 @@
      <form action="letter_insert.php" method="post" id = "tweet_area">
         <input type="text" id = "comment" name = "message" placeholder="メッセージを入力">
 
-    <!-- 投げ銭金額入力部 -->
-    <div class = "throw_money_area">
-        <div>投げ銭金額</div>
-
-        <p><span id="current-value"></span>円</p>
-        <input type="range" id="example" name = "amount" min="100" max="10000" step="100">
-    </div>
-    <!-- 公開/非公開の選択 -->
-    <label class="selectbox-5">
-        <select name="status" required>
-            <option value="">公開・非公開を選択してください</option>
-            <option value="open">ファンレターを公開する</option>
-            <option value="close">ファンレターを公開しない</option>
-        </select>
-    </label>
+        <!-- 投げ銭金額入力部 -->
+        <div class = "throw_money_area">
+            <div>投げ銭金額</div>
+            <p><span id="current-value"></span>円</p>
+            <input type="range" id="example" name = "amount" min="100" max="10000" step="100">
+        </div>
+        <!-- 公開/非公開の選択 -->
+        <label class="selectbox-5">
+            <select name="status" required>
+                <option value="">公開・非公開を選択してください</option>
+                <option value="open">ファンレターを公開する</option>
+                <option value="close">ファンレターを公開しない</option>
+            </select>
+        </label>
 
         <div id = send_btn_area>
             <!-- <input class = "send_btn" type="submit" value= "送信"> -->
@@ -164,8 +164,11 @@
    <!-- $tweetsが空でないときに実行 -->
        <?php if (!empty($messages)): ?>
         <!-- 配列の要素を1個ずつ取り出し、要素（$tweet）に代入して処理を繰り返す -->
-         <!-- array_revers関数を使用して新しい順に表示させる -->
-       <?php $ids = array_reverse($ids); ?>
+        <!-- array_revers関数を使用して新しい順に表示させる -->
+        <?php $messages = array_reverse($messages); ?>
+        <?php $amounts = array_reverse($amounts); ?>
+        <?php $ids = array_reverse($ids); ?>
+        
         <?php foreach (array_reverse($messages) as $key => $message): ?>
             <div class="tweet-card">
             <!-- ミートボールの表示 -->
@@ -190,7 +193,10 @@
             <?php else: ?>
             <?php endif; ?>
                 <!-- 入力したテキストと時間を表示 -->
-                <p class="tweet-content"><?php echo $message; ?></p>
+                <!-- <p class="tweet-content"><?php echo $message; ?></p> -->
+                <!-- <p class="tweet-content"><?php echo $amount; ?></p> -->
+                <p class="tweet-content"><?php echo htmlspecialchars($message, ENT_QUOTES, 'UTF-8'); ?></p>
+                <p class="tweet-content">投げ銭: <?php echo htmlspecialchars($amounts[$key], ENT_QUOTES, 'UTF-8'); ?> 円</p>
                 <span class="tweet-time"><?php echo date('Y-m-d H:i:s'); ?></span>
                 
             </div>

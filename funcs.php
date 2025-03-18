@@ -36,6 +36,7 @@ function db_conn()
     // ID:'root', Password: xamppは 空白 '',SQLのポート番号の指定も必要
     $server_info = 'mysql:dbname=' . $db_name . ';charset=utf8;host=' . $db_host;
     $pdo = new PDO($server_info, $db_id, $db_pw);
+    return $pdo;    //$pdoを外で使うためにreturnを記載する
   } catch (PDOException $e) {
     exit('DBConnectError:'.$e->getMessage());
   }
