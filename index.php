@@ -64,7 +64,6 @@ if ($status === false) {
     <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
     <script src="js/slick.min.js"></script>
     <script src="js/slick.js"></script>
-
 </head>
 
 <body>
@@ -101,22 +100,20 @@ if ($status === false) {
 
     <main>
     <!-- <div class=sidemenue>side_menue</div> -->
-    <div class=content>
+    <!-- <div class=content> -->
      <div class="toppic_area">
       <img class="toppic" src="./pic/top2.jpg" alt="">
       <h1 class="topname">投げ銭ファンレター</h1>
       <div class="introduction">
-        <h1>ABOUT</h1>
-        <div>
-          投げ銭ファンレターは、～自分の推しが誰かの推しに～をコンセプトに<br>
-          あなたの好きなアイドルの魅力を投稿してもらうことで、誰かの推し増しにつながるセカイを目指しています。<br>
-          是非みなさんの好きなアイドルグループの口コミを投稿して推しのグループを盛り上げていきましょう！</div>
-        </div>
+          「アイドルの夢を、ファンの力で支える。」<br>
+          ライブや楽曲活動ではなく、チェキ収入に依存する現状を変えたい。<br>
+          あなたの言葉と応援が、アイドルの未来をつくる「投げ銭ファンレター」サービス。</div>
       </div>
+    </div>
 
 
   <!-- スライダー -->
-    <div class="section">
+    <!-- <div class="section">
       <h1>PICKUP GROUP</h1>
       <div class="sliderArea">
         <div class="full-screen slider">
@@ -127,13 +124,12 @@ if ($status === false) {
           <div><img src="./pic/5.jpg" alt="125naroom"></div>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <!-- 表示部分 -->
-     <div>
+     <!-- <div> -->
       <div class="profile_card_area"><?= $view ?></div>
-    </div>
-
+    <!-- </div> -->
      </main>
 
     <!-- フッター情報 -->
@@ -148,12 +144,8 @@ if ($status === false) {
         <a class=footerlink href="./idol_reg.php">アイドルグループ登録</a>
         <a class=footerlink href="./member_reg.php">メンバー登録</a>
       </div>
-      </div>
-
      </footer>
 
-    
-     
+    </body>
 
-</body>
 </html>

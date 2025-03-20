@@ -29,11 +29,13 @@
     border: 1px solid #ccc;
     border-radius: 8px;
     padding: 10px;
-    background-color: #f9f9f9;
+    /* background-color: #f9f9f9; */
+    background-color: #ddecea;
+    background: url('https://stat.ameba.jp/user_images/20230328/19/migomigo7/f7/eb/g/o0100008615261890525.gif');
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     width: 80%;
     max-width: 200px;
-    margin: 10px auto;
+    margin: 0 auto;
 
 }
 

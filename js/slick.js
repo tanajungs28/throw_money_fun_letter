@@ -3011,6 +3011,30 @@
 }));
 
 
+// スライダー幅の調整（今のところきいてなさそう）
+$('.sliderArea').slick({
+    slidesToShow: 3, // 初期表示
+    slidesToScroll: 1,
+    infinite: true,
+    arrows: true,
+    dots: true,
+    responsive: [
+        {
+            breakpoint: 1024, // 画面幅1024px以下
+            settings: {
+                slidesToShow: 2
+            }
+        },
+        {
+            breakpoint: 768, // 画面幅768px以下
+            settings: {
+                slidesToShow: 1
+            }
+        }
+    ]
+});
+
+
 $(document).ready(function(){
     $('.slider').slick({
       autoplay: true, // 自動再生

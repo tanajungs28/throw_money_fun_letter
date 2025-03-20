@@ -5,7 +5,9 @@
 }
 
 .image_name_block{
-    margin-left: 30%;
+    padding-top: 10px;
+    margin-right: auto;
+    margin-left: auto;
     text-align: center;
     display: flex;
 }

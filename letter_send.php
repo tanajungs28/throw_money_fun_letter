@@ -114,7 +114,6 @@
     <!-- <div class=sidemenue>side_menue</div> -->
     <div class=content>
     <!--アイドルグループの基本ページ（グループ名・写真）  -->
-    <div id="member_image_area">
         <div class = "image_name_block">
             <?php if ($member_image): ?>
                 <img id="member_img" src="<?= htmlspecialchars($member_image, ENT_QUOTES, 'UTF-8') ?>" alt="グループ画像">
@@ -123,7 +122,6 @@
             <?php endif; ?>
             <div class = "member_name"><?= htmlspecialchars($member_name, ENT_QUOTES, 'UTF-8') ?></div>
         </div>
-    </div>
 
 
 
@@ -193,12 +191,11 @@
             <?php else: ?>
             <?php endif; ?>
                 <!-- 入力したテキストと時間を表示 -->
-                <!-- <p class="tweet-content"><?php echo $message; ?></p> -->
-                <!-- <p class="tweet-content"><?php echo $amount; ?></p> -->
-                <p class="tweet-content"><?php echo htmlspecialchars($message, ENT_QUOTES, 'UTF-8'); ?></p>
-                <p class="tweet-content">投げ銭: <?php echo htmlspecialchars($amounts[$key], ENT_QUOTES, 'UTF-8'); ?> 円</p>
-                <span class="tweet-time"><?php echo date('Y-m-d H:i:s'); ?></span>
-                
+                <div style="padding:12px; background-color:rgba(255,255,255,0.8); border-radius: 5px;border:1px solid #fff;">
+                    <p class="tweet-content"><?php echo htmlspecialchars($message, ENT_QUOTES, 'UTF-8'); ?></p>
+                    <p class="tweet-content">投げ銭: <?php echo htmlspecialchars($amounts[$key], ENT_QUOTES, 'UTF-8'); ?> 円</p>
+                    <span class="tweet-time"><?php echo date('Y-m-d H:i:s'); ?></span>
+                </div>
             </div>
         <?php endforeach; ?>
     <?php else: ?>
