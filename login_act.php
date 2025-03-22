@@ -33,6 +33,7 @@ $val = $stmt->fetch();
 //if(password_verify($lpw, $val['lpw'])){ //* PasswordがHash化の場合はこっちのIFを使う
 if( $val['id'] != ''){
     //Login成功時 該当レコードがあればSESSIONに値を代入
+    $_SESSION['id'] = $val['id'];
     $_SESSION['chk_ssid'] = session_id();
     $_SESSION['name'] = $val['lid'];
     $_SESSION['kanri_flg'] = $val['kanri_flg'];

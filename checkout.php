@@ -30,10 +30,10 @@ $session = \Stripe\Checkout\Session::create([
     ]],
     'mode' => 'payment',
     //ここはフルパスでないとstripe側でエラーにしているのでhttpsから始めないといけない
-    // 'success_url' => 'http://localhost//gs_code/throw_money_fun_letter/success.php',
-    // 'cancel_url' => 'http://localhost//gs_code/throw_money_fun_letter/cancel.php',
-    'success_url' => 'https://tanajun.sakura.ne.jp/throw_money_fun_letter/success.php',
-    'cancel_url' => 'https://tanajun.sakura.ne.jp/throw_money_fun_letter/cancel.php',
+    'success_url' => 'http://localhost//gs_code/throw_money_fun_letter/success.php',
+    'cancel_url' => 'http://localhost//gs_code/throw_money_fun_letter/cancel.php',
+    // 'success_url' => 'https://tanajun.sakura.ne.jp/throw_money_fun_letter/success.php',
+    // 'cancel_url' => 'https://tanajun.sakura.ne.jp/throw_money_fun_letter/cancel.php',
 ]);
 
 // セッションのURLにリダイレクト

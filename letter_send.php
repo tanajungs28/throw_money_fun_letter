@@ -33,13 +33,12 @@
         //２．データ登録SQL作成
         $stmt = $pdo->prepare
                     (
-                    'SELECT letter_list.message,letter_list.id,letter_list.amount
+                    'SELECT letter_list.message,letter_list.id,letter_list.amount,letter_list.status
                     FROM letter_list
                     WHERE member_id = :member_id');
         $stmt->bindValue(':member_id', $member_id, PDO::PARAM_INT);
         $status = $stmt->execute();
         
-
         //３．データ表示
         $view = '';
         $tweets = [];
@@ -50,9 +49,10 @@
         } else {
             //1行ずつデータベースから結果を取り出して配列に格納($resultは連想配列)
             while ($result = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                $messages[] = $result['message'];
-                $amounts[] = $result['amount'];
-                $ids[] = $result['id'];
+                    $messages[] = $result['message'];
+                    $amounts[] = $result['amount'];
+                    $ids[] = $result['id'];    
+                    $statuss[] = $result['status'];    
             }
         }
 ?>
@@ -147,16 +147,22 @@
         </label>
 
         <div id = send_btn_area>
-            <!-- <input class = "send_btn" type="submit" value= "送信"> -->
-            <button type="submit" class="send_btn" id="submitBtn">送信</button>
-            <input type="hidden" id = "member_id" name = "member_id" value = "<?= htmlspecialchars($member_id, ENT_QUOTES, 'UTF-8') ?>">
-            <!-- <input type="hidden" id = "group_name_id" name = "group_name_id" value = "<?= htmlspecialchars($group_id, ENT_QUOTES, 'UTF-8') ?>"> -->
+        <!-- ログインチェック -->
+        <?php if(!isset($_SESSION['chk_ssid']) || $_SESSION['chk_ssid'] != session_id()): ?>
+            <!-- ログインを経由してない場合ログイン画面へ遷移させる -->
+            <button class="send_btn" id="submitBtn" onclick="location.href='login.php'">ログインしてからメッセージを送る</button>
+            <!-- ログインしている場合はメッセージ送付が可能に -->
+            <?php else: ?>
+                <button type="submit" class="send_btn" id="submitBtn">送信</button>
+                <input type="hidden" id = "member_id" name = "member_id" value = "<?= htmlspecialchars($member_id, ENT_QUOTES, 'UTF-8') ?>">
+                <!-- <input type="hidden" id = "group_name_id" name = "group_name_id" value = "<?= htmlspecialchars($group_id, ENT_QUOTES, 'UTF-8') ?>"> -->
+            <?php endif; ?>
         </div>
     </form>
 
 
 
-    <!-- タイムラインを表示 -->
+    <!-- 送られてきたファンレターを表示 -->
     <h1 class = "sub_title">みんなからのファンレター</h1>
     <div id="timeline">
    <!-- $tweetsが空でないときに実行 -->
@@ -166,6 +172,7 @@
         <?php $messages = array_reverse($messages); ?>
         <?php $amounts = array_reverse($amounts); ?>
         <?php $ids = array_reverse($ids); ?>
+        <?php $statuss = array_reverse($statuss); ?>
         
         <?php foreach (array_reverse($messages) as $key => $message): ?>
             <div class="tweet-card">
@@ -190,11 +197,17 @@
                 </div>
             <?php else: ?>
             <?php endif; ?>
-                <!-- 入力したテキストと時間を表示 -->
+                <!-- 入力したメッセージと時間を表示 -->
                 <div style="padding:12px; background-color:rgba(255,255,255,0.8); border-radius: 5px;border:1px solid #fff;">
-                    <p class="tweet-content"><?php echo htmlspecialchars($message, ENT_QUOTES, 'UTF-8'); ?></p>
-                    <p class="tweet-content">投げ銭: <?php echo htmlspecialchars($amounts[$key], ENT_QUOTES, 'UTF-8'); ?> 円</p>
-                    <span class="tweet-time"><?php echo date('Y-m-d H:i:s'); ?></span>
+                <!-- 公開・非公開の設定に応じてファンレターの公開範囲を変更 -->
+                <?php if ($statuss[$key] === "open"): ?>
+                        <p class="tweet-content"><?php echo htmlspecialchars($message, ENT_QUOTES, 'UTF-8'); ?></p>
+                        <p class="tweet-content">投げ銭: <?php echo htmlspecialchars($amounts[$key], ENT_QUOTES, 'UTF-8'); ?> 円</p>
+                        <span class="tweet-time"><?php echo date('Y-m-d H:i:s'); ?></span>
+                    <?php else: ?>
+                        <p class="tweet-content">非公開のファンレター</p>
+                        <span class="tweet-time"><?php echo date('Y-m-d H:i:s'); ?></span>
+                    <?php endif; ?>
                 </div>
             </div>
         <?php endforeach; ?>

@@ -9,9 +9,8 @@ $amount = $_POST['amount'];
 $status = $_POST['status'];
 
 session_start();
-// if (isset($_POST['amount'])) { 
   $_SESSION['amount'] = $amount; // スライダーの値を更新
-// }
+  $user_id = $_SESSION['id'];
 
 if (!$message || !$amount || !$status || !$member_id) {
   echo json_encode(['success' => false, 'message' => '入力が不足しています']);
@@ -39,9 +38,6 @@ $stmt = $pdo->prepare(
 //  2. バインド変数を用意(セキュリティ対策で変数を1個かませる)
 // Integer 数値の場合 PDO::PARAM_INT
 // String文字列の場合 PDO::PARAM_STR
-
-//user_idはセッションで取りたいが一旦仮置き
-$user_id = 1;
 
 $stmt->bindValue(':user_id', $user_id, PDO::PARAM_STR);
 $stmt->bindValue(':member_id', $member_id, PDO::PARAM_STR);
