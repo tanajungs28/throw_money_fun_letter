@@ -1,0 +1,98 @@
+/* === 共通レイアウト === */
+body {
+    font-family: "Helvetica Neue", sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #fafafa;
+    color: #333;
+  }
+  
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  h1, h2, h3 {
+    margin: 0;
+  }
+  
+  /* === ヘッダー === */
+  header {
+    background: linear-gradient(to right, #ff66a5, #cc66cc);
+    padding: 15px 20px;
+    color: white;
+    position: relative;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+  
+  .title_area {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+  }
+  
+  .user_reg_area {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+  
+  .username {
+    font-weight: bold;
+    font-size: 0.95rem;
+  }
+  
+  .logout_btn {
+    background-color: white;
+    color: #cc3399;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    transition: background-color 0.2s ease;
+  }
+  
+  .logout_btn:hover {
+    background-color: #ffe6f0;
+  }
+  
+  
+  /* === フッター === */
+  footer {
+    background: linear-gradient(to right, #ff99c8, #cc99ff);
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 60px;
+  }
+  
+  .footer_title {
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .footer_menu {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  
+  .footerlink {
+    color: white;
+    font-size: 0.95rem;
+    font-weight: bold;
+    transition: opacity 0.3s;
+  }
+  
+  .footerlink:hover {
+    opacity: 0.8;
+  }
+  

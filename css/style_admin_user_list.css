@@ -1,0 +1,73 @@
+
+.user-list-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.user-list-table th,
+.user-list-table td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: center;
+}
+
+.user-list-table th {
+  background-color: #f4f4f4;
+}
+
+.action-btns a {
+  margin: 0 5px;
+  padding: 6px 12px;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 0.9em;
+  display: inline-block;
+}
+
+.action-btns .edit {
+  background-color: #5cb85c;
+  color: white;
+}
+
+.action-btns .delete {
+  background-color: #d9534f;
+  color: white;
+}
+
+.add-btn {
+  display: inline-block;
+  margin-bottom: 20px;
+  padding: 10px 20px;
+  background-color: #3399cc;
+  color: #fff;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.btn-link {
+  font-size: 0.85em;
+  color: #007BFF;
+  text-decoration: underline;
+}
+.group-link {
+  display: inline-block;
+  margin-bottom: 4px;
+  color: #d63384;
+  text-decoration: none;
+}
+.group-link:hover {
+  text-decoration: underline;
+}
+
+.small-link {
+  font-size: 0.85em;
+  color: #555;
+  text-decoration: underline;
+  margin-top: 5px;
+  display: inline-block;
+}
+.small-link:hover {
+  color: #d63384;
+}

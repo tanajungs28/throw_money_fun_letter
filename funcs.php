@@ -31,7 +31,7 @@ function db_conn()
   $db_host = '';   //DBホスト
   $db_id = '';         //ユーザ名
   $db_pw = '';                      //パスワード
-    
+      
   try {
     // ID:'root', Password: xamppは 空白 '',SQLのポート番号の指定も必要
     $server_info = 'mysql:dbname=' . $db_name . ';charset=utf8;host=' . $db_host;

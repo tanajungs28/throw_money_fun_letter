@@ -1,4 +1,8 @@
 <?php
+// エラーを出力する
+ini_set('display_errors', '1');
+error_reporting(E_ALL);
+
 //必ずsession_startは最初に記述
 session_start();
 

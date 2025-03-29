@@ -9,12 +9,14 @@ $pdo = localdb_conn(); //ローカル環境
 
 //３．データ削除SQL作成
 //この時にソフトデリートの仕掛けを入れておいてもいいね（表示は消すけどデータベース上は消さないみたいな）
-$stmt = $pdo->prepare('DELETE FROM timeline_table WHERE id = :id');
+$stmt = $pdo->prepare('DELETE FROM letter_list WHERE id = :id');
 
 // 数値の場合 PDO::PARAM_INT
 // 文字の場合 PDO::PARAM_STR
 $stmt->bindValue(':id', $id, PDO::PARAM_INT);
 $status = $stmt->execute(); //実行
+
+$pdo->commit();
 
 //４．データ登録処理後
 if ($status === false) {

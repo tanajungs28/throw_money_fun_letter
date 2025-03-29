@@ -7,7 +7,9 @@
     $name = $_POST['uname'];
     $lid = $_POST['lid'];
     $lpw = $_POST['lpw'];
-    // $gender = $_POST['gender'];
+    $birthday = $_POST['birthday'];
+    $gender = $_POST['gender'];
+    $prefectures = $_POST['prefectures'];
 
     //2.  DB接続します
     $pdo = localdb_conn(); //ローカル環境
@@ -16,8 +18,8 @@
 
     // 1. SQL文を用意
     $stmt = $pdo->prepare("INSERT INTO 
-                            user_list_table(id, name, lid, lpw, kanri_flg, life_flg) 
-                            VALUES(NULL, :name, :lid, :lpw, 0, 0)"
+                            user_list_table(id, name, lid, lpw, birthday, gender, prefectures, kanri_flg, role) 
+                            VALUES(NULL, :name, :lid, :lpw, :birthday, :gender, :prefectures, 0, :role)"
                         );
 
     //  2. バインド変数を用意(セキュリティ対策で変数を1個かませる)
@@ -27,6 +29,10 @@
     $stmt->bindValue(':name', $name, PDO::PARAM_STR);
     $stmt->bindValue(':lid', $lid, PDO::PARAM_STR);
     $stmt->bindValue(':lpw', $lpw, PDO::PARAM_STR);
+    $stmt->bindValue(':birthday', $birthday, PDO::PARAM_STR);
+    $stmt->bindValue(':gender', $gender, PDO::PARAM_STR);
+    $stmt->bindValue(':prefectures', $prefectures, PDO::PARAM_STR);
+    $stmt->bindValue(':role', "fan", PDO::PARAM_STR);
 
     //  3. 実行
     $status = $stmt->execute();

@@ -7,10 +7,17 @@
         
         // GET パラメータからメンバーIDを取得
         $member_id = $_GET['member_id'] ?? null;
+        $event_id = $_GET['event_id'] ?? null;
 
         if ($member_id === null) {
             exit('Error: group_id is missing.');
         }
+        if (!$member_id || !$event_id) {
+            echo "[event_id=", $event_id,"]";
+            echo "[member_id=", $member_id,"]";
+            exit('メンバーIDまたはイベントIDが不足しています');
+        }
+
 
         // 1. メンバー名を取得
         $member_name_stmt = $pdo->prepare(
@@ -33,11 +40,30 @@
         //２．データ登録SQL作成
         $stmt = $pdo->prepare
                     (
-                    'SELECT letter_list.message,letter_list.id,letter_list.amount,letter_list.status
+                    'SELECT letter_list.message,letter_list.id,letter_list.amount,letter_list.status,letter_list.event_id, letter_list.release_status,letter_list.created_at
                     FROM letter_list
                     WHERE member_id = :member_id');
         $stmt->bindValue(':member_id', $member_id, PDO::PARAM_INT);
         $status = $stmt->execute();
+
+        $release_status = $status['release_status'] ?? '';
+        
+        // --- イベント情報と意気込みコメントを取得 ---
+        $event_stmt = $pdo->prepare("
+        SELECT e.event_name, e.event_day, e.hashtag, em.message AS message
+        FROM event_list e
+        JOIN event_members em ON e.id = em.event_id
+        WHERE e.id = :event_id AND em.member_id = :member_id
+        ");
+        $event_stmt->bindValue(':event_id', $event_id, PDO::PARAM_INT);
+        $event_stmt->bindValue(':member_id', $member_id, PDO::PARAM_INT);
+        $event_stmt->execute();
+        $event_data = $event_stmt->fetch(PDO::FETCH_ASSOC);
+
+        $event_name = $event_data['event_name'] ?? '';
+        $event_day = $event_data['event_day'] ?? '';
+        $hashtag = $event_data['hashtag'] ?? '';
+        $message = $event_data['message'] ?? '';
         
         //３．データ表示
         $view = '';
@@ -52,9 +78,41 @@
                     $messages[] = $result['message'];
                     $amounts[] = $result['amount'];
                     $ids[] = $result['id'];    
-                    $statuss[] = $result['status'];    
+                    $statuss[] = $result['status'];
+                    $release_statuss[] = $result['release_status'];
+                    $timestamps[] = $result['created_at'];
             }
+            // 順番を新しい順に表示させるためひっくり返す
+            $ids = array_reverse($ids);
+            // データが空になっていると逆転できないので空の場合の処理を記載しておく
+            if (!empty($messages) && is_array($messages)) {
+                $messages = array_reverse($messages);
+            } else {
+                $messages = [];
+            }
+            if (!empty($amounts) && is_array($amounts)) {
+                $amounts = array_reverse($amounts);
+            } else {
+                $amounts = [];
+            }
+            if (!empty($statuss) && is_array($statuss)) {
+                $statuss = array_reverse($statuss);
+            } else {
+                $statuss = [];
+            }
+            if (!empty($timestamps) && is_array($timestamps)) {
+                $timestamps = array_reverse($timestamps);
+            } else {
+                $imestamps = [];
+            }
+            if (!empty($release_statuss) && is_array($release_statuss)) {
+                $release_statuss = array_reverse($release_statuss);
+            } else {
+                $release_statuss = [];
+            }
+
         }
+
 ?>
 
 
@@ -63,12 +121,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>投げ銭ファンレター</title>
+    <title>LiveEcho</title>
     <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="css/style_index.css">
+    <!-- <link rel="stylesheet" href="css/style_index.css"> -->
     <link rel="stylesheet" href="css/style_timeline.css">
     <link rel="stylesheet" href="css/style_comment_list.css">
     <link rel="stylesheet" href="css/style_letter_send.css">
+    <link rel="stylesheet" href="css/style_common_header_footer.css">
+
     <!-- jquery指定 -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <!-- jsファイル指定、importを使用するためにはscript指定時に「type="module"」を入れないと動かない -->
@@ -77,39 +137,24 @@
 
 </head>
 
-
 <body>
     <!-- ヘッダー -->
-    <header>
-        <div class="title_area">
-            <div class="title"><?= htmlspecialchars($member_name, ENT_QUOTES, 'UTF-8') ?>へファンレターを送る</div>
-            <div class="user_reg_area">
-              <?php if (isset($_SESSION['name'])): ?>
-                <span class="username"><?= htmlspecialchars($_SESSION['name'], ENT_QUOTES, 'UTF-8'); ?> さん</span>
-                <a class="logout_btn" href="./logout.php">ログアウト</a>
-              <?php else: ?>
-                <a class="login_btn" href="./login.php">ログイン</a>
-                <a class="userreg_btn" href="./user_reg.php">新規登録</a>
-              <?php endif; ?>
-            </div>
+<?php
+    //  権限に応じてヘッダーを読み込み
+    if (isset($_SESSION['kanri_flg'])) {
+        if ($_SESSION['kanri_flg'] == 99) {
+            include 'header_admin.php';  // システム管理者
+        } elseif ($_SESSION['kanri_flg'] == 1) {
+            include 'header_owner.php';  // アイドル運営者
+        } else {
+            include 'header_general.php'; // 一般ユーザー
+        }
+    } else {
+        include 'header_nologin.php'; // 未ログインも一般扱い
+    }
+?>
 
-        </div>
-        <!-- ハンバーガーメニュー -->
-        <input type="checkbox" class="menu-btn" id="menu-btn">
-        <label for="menu-btn" class="menu-icon">
-            <span class="navicon"></span>
-        </label>
-            <ul class="menu">
-                <li class="top"><a href="./user_reg.php">ユーザー登録</a></li>
-                <li><a href="./user_list.php">ユーザー一覧</a></li>
-                <li><a href="./login.php">ログイン</a></li>
-                <li><a href="./logout.php">ログアウト</a></li>
-                <li><a href="./index.php">アイドルグループ一覧</a></li>
-                <li><a href="./idol_reg.php">アイドルグループ登録</a></li>
-                <li><a href="./member_reg.php">メンバー登録</a></li>
-            </ul>
-    </header>
-    
+
     <main>
     <!-- <div class=sidemenue>side_menue</div> -->
     <div class=content>
@@ -123,117 +168,119 @@
             <div class = "member_name"><?= htmlspecialchars($member_name, ENT_QUOTES, 'UTF-8') ?></div>
         </div>
 
+        <div class="event-info">
+    <h2>イベント情報</h2>
+    <p><strong>イベント名：</strong><?= h($event_name) ?></p>
+    <p><strong>開催日：</strong><?= h($event_day) ?></p>
+    <p><strong>ハッシュタグ：</strong>#<?= h($hashtag) ?></p>
+    <p><strong>意気込み：</strong><?= nl2br(h($message)) ?></p>
+</div>
 
-
-
-     <!-- メッセージ入力部 -->
-      <h1 class = "messeage_title">メッセージ</h1>
-     <form action="letter_insert.php" method="post" id = "tweet_area">
-        <input type="text" id = "comment" name = "message" placeholder="メッセージを入力">
-
-        <!-- 投げ銭金額入力部 -->
-        <div class = "throw_money_area">
-            <div>投げ銭金額</div>
-            <p><span id="current-value"></span>円</p>
-            <input type="range" id="example" name = "amount" min="100" max="10000" step="100">
+<!-- メッセージ投稿セクション -->
+<div class="form-section">
+    <h1>ファンレターを送る</h1>
+    <form action="letter_insert.php" method="post" id="tweet_area">
+        <label>メッセージ内容</label>
+        <input type="text" name="message" placeholder="応援メッセージを入力してください">
+        <!-- 投げ銭スイッチ -->
+        <div class="switch-container">
+            <label class="switch-label">投げ銭する？</label>
+            <label class="switch">
+                <input type="checkbox" id="toggle-throw" name="throw_switch"  checked>
+                <span class="slider"></span>
+            </label>
         </div>
-        <!-- 公開/非公開の選択 -->
-        <label class="selectbox-5">
-            <select name="status" required>
-                <option value="">公開・非公開を選択してください</option>
-                <option value="open">ファンレターを公開する</option>
-                <option value="close">ファンレターを公開しない</option>
-            </select>
-        </label>
-
-        <div id = send_btn_area>
-        <!-- ログインチェック -->
-        <?php if(!isset($_SESSION['chk_ssid']) || $_SESSION['chk_ssid'] != session_id()): ?>
-            <!-- ログインを経由してない場合ログイン画面へ遷移させる -->
-            <button class="send_btn" id="submitBtn" onclick="location.href='login.php'">ログインしてからメッセージを送る</button>
-            <!-- ログインしている場合はメッセージ送付が可能に -->
-            <?php else: ?>
-                <button type="submit" class="send_btn" id="submitBtn">送信</button>
-                <input type="hidden" id = "member_id" name = "member_id" value = "<?= htmlspecialchars($member_id, ENT_QUOTES, 'UTF-8') ?>">
-                <!-- <input type="hidden" id = "group_name_id" name = "group_name_id" value = "<?= htmlspecialchars($group_id, ENT_QUOTES, 'UTF-8') ?>"> -->
-            <?php endif; ?>
+        <!-- 金額スライダー -->
+        <div id="throw-money-area">
+            <label>投げ銭金額（0〜10,000円）</label>
+            <p><span id="current-value"></span> 円</p>
+            <input type="range" name="amount" min="0" max="10000" step="100" id="example">
         </div>
+        <!-- メッセージの公開・非公開の設定 -->
+        <label>公開・非公開設定</label>
+        <select name="status" required>
+            <option value="">選択してください</option>
+            <option value="open">ファンレターを公開する</option>
+            <option value="close">ファンレターを公開しない</option>
+        </select>
+        <!-- Hidden：メンバーIDとイベントIDをPOSTする -->
+        <input type="hidden" name="member_id" value="<?= h($member_id) ?>">
+        <input type="hidden" name="event_id" value="<?= h($event_id) ?>">
+
+        <button type="submit" class="send_btn">送信</button>
     </form>
+</div>
 
 
-
-    <!-- 送られてきたファンレターを表示 -->
-    <h1 class = "sub_title">みんなからのファンレター</h1>
-    <div id="timeline">
-   <!-- $tweetsが空でないときに実行 -->
-       <?php if (!empty($messages)): ?>
-        <!-- 配列の要素を1個ずつ取り出し、要素（$tweet）に代入して処理を繰り返す -->
-        <!-- array_revers関数を使用して新しい順に表示させる -->
-        <?php $messages = array_reverse($messages); ?>
-        <?php $amounts = array_reverse($amounts); ?>
-        <?php $ids = array_reverse($ids); ?>
-        <?php $statuss = array_reverse($statuss); ?>
-        
-        <?php foreach (array_reverse($messages) as $key => $message): ?>
+<h1 class="sub_title">みんなからのファンレター</h1>
+<div id="timeline">
+    <?php if (!empty($messages)): ?>
+        <?php foreach ($messages as $key => $message): ?>
+            <!-- 決済完了or投げ銭なしの投稿のステータスになっているかチェック -->
+            <?php if ($release_statuss[$key] === "completed"): ?>
             <div class="tweet-card">
-            <!-- ミートボールの表示 -->
-           <?php if(isset($_SESSION['kanri_flg']) && ($_SESSION['kanri_flg'] === 1)): ?>
-
-            <button class="meatball">
-                    <span class="meatball-ball"></span>
-                    <span class="meatball-ball"></span>
-                    <span class="meatball-ball"></span>
-            </button>
-                <!-- ミートボール押したときの表示メニュー -->
-                <div class="menu-container">
-                    <div class="submenu">
-                <?php var_dump($ids[$key]);?>
-                        <ul>
-                            <li><a href="tweet_delete.php?id=<?php echo $ids[$key] ?>">削除</a></li>
-                            <li><a href="tweet_edit.php?id=<?php echo $ids[$key] ?>">編集</a></li>
-                            <li><a href="#">未実装</a></li>
-                        </ul>
-                    </div>
-                </div>
-            <?php else: ?>
-            <?php endif; ?>
-                <!-- 入力したメッセージと時間を表示 -->
-                <div style="padding:12px; background-color:rgba(255,255,255,0.8); border-radius: 5px;border:1px solid #fff;">
-                <!-- 公開・非公開の設定に応じてファンレターの公開範囲を変更 -->
-                <?php if ($statuss[$key] === "open"): ?>
-                        <p class="tweet-content"><?php echo htmlspecialchars($message, ENT_QUOTES, 'UTF-8'); ?></p>
-                        <p class="tweet-content">投げ銭: <?php echo htmlspecialchars($amounts[$key], ENT_QUOTES, 'UTF-8'); ?> 円</p>
-                        <span class="tweet-time"><?php echo date('Y-m-d H:i:s'); ?></span>
+                    <!-- 公開・非公開の設定に応じてファンレターの公開範囲を変更 -->
+                    <?php if ($statuss[$key] === "open"): ?>
+                        <p class="tweet-content"><?= h($message) ?></p>
+                        <p class="tweet-content">投げ銭: <?= h($amounts[$key]) ?>円</p>
                     <?php else: ?>
                         <p class="tweet-content">非公開のファンレター</p>
-                        <span class="tweet-time"><?php echo date('Y-m-d H:i:s'); ?></span>
                     <?php endif; ?>
+                    <span class="tweet-time"><?= h(date('Y-m-d H:i', strtotime($timestamps[$key]))) ?></span>
                 </div>
-            </div>
+            <?php else: ?>
+                <!-- ステータスがcompletedになってなければメッセージを公開しない -->
+            <?php endif; ?>
         <?php endforeach; ?>
     <?php else: ?>
         <p>まだファンレターがありません。</p>
     <?php endif; ?>
 
-    </div>
-    </div>
+</div>
+
+
+
     </main>
 
 
     <!-- フッター情報 -->
-    <footer>
-      <div class="footer_title">アイドル口コミプラットフォーム</div>
-      <div class="footer_menu">
-        <a class=footerlink href="./user_reg.php">ユーザー登録</a>
-        <a class=footerlink href="./user_list.php">ユーザー一覧</a>
-        <a class=footerlink href="./login.php">ログイン</a>
-        <a class=footerlink href="./logout.php">ログアウト</a>
-        <a class=footerlink href="./idol_list.php">アイドルグループ一覧</a>
-        <a class=footerlink href="./idol_reg.php">アイドルグループ登録</a>
-      </div>
+    <?php
+// ページ末尾でフッター切り替え
+if (isset($_SESSION['kanri_flg'])) {
+    if ($_SESSION['kanri_flg'] == 99) {
+        include 'footer_admin.php';
+    } elseif ($_SESSION['kanri_flg'] == 1) {
+        include 'footer_owner.php';
+    } else {
+        include 'footer_general.php';
+    }
+} else {
+    include 'footer_general.php';
+}
+?>
 
-     </footer>
     
+    <script>
+        $(function () {
+            $('#toggle-throw').on('change', function () {
+                if ($(this).is(':checked')) {
+                    $('#throw-money-area').slideDown();
+                } else {
+                    $('#throw-money-area').slideUp();
+                    $('#example').val(0); // 0円にリセットするなど
+                    $('#current-value').text(0); // 0円にリセットするなど
+                }
+            });
+
+            // 初期化
+            $('#throw-money-area').toggle($('#toggle-throw').is(':checked'));
+
+            // スライダーの値表示
+            $('#example').on('input', function () {
+                $('#current-value').text($(this).val());
+            });
+        });
+    </script>
 
 
 </body>

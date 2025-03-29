@@ -1,0 +1,106 @@
+/* グループ一覧用のCSS */
+
+.container {
+    max-width: 960px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+  
+  h1 {
+    font-size: 1.8em;
+    color: #d63384;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  /* 新規追加ボタン */
+  .add-btn {
+    display: inline-block;
+    background-color: #3399cc;
+    color: #fff;
+    padding: 10px 18px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    margin-bottom: 20px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .add-btn:hover {
+    background-color: #2b85b1;
+  }
+  
+  /* テーブル全体 */
+  .group-list-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    font-size: 0.95rem;
+  }
+  
+  /* テーブルヘッダー */
+  .group-list-table thead {
+    background-color: #fce4ec;
+  }
+  
+  .group-list-table th,
+  .group-list-table td {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #ddd;
+  }
+  
+  .group-list-table tbody tr:nth-child(odd) {
+    background-color: #fff7fb;
+  }
+  
+  /* 操作ボタン列 */
+  .action-btns {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+  
+  /* 編集・削除ボタン */
+  .edit,
+  .delete {
+    padding: 6px 12px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 0.9em;
+    color: #fff;
+    transition: opacity 0.2s ease;
+  }
+  
+  .edit {
+    background-color: #6a5acd;
+  }
+  
+  .edit:hover {
+    opacity: 0.85;
+  }
+  
+  .delete {
+    background-color: #e74c3c;
+  }
+  
+  .delete:hover {
+    opacity: 0.85;
+  }
+  
+  /* レスポンシブ対応 */
+  @media (max-width: 768px) {
+    .group-list-table th,
+    .group-list-table td {
+      padding: 8px;
+      font-size: 0.85rem;
+    }
+  
+    .action-btns {
+      flex-direction: column;
+    }
+  }
+  

@@ -1,0 +1,113 @@
+
+/* グループ詳細ページ用のCSS */
+
+body {
+    font-family: 'Helvetica Neue', sans-serif;
+    margin: 0;
+    background: #fff;
+    color: #333;
+  }
+  
+  .container {
+    max-width: 960px;
+    margin: 30px auto;
+    padding: 20px;
+  }
+  
+  h1 {
+    font-size: 1.8em;
+    color: #cc3399;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .group-info {
+    background: #f9f2f9;
+    border-left: 5px solid #cc66cc;
+    padding: 15px;
+    margin-bottom: 30px;
+    border-radius: 5px;
+  }
+  
+  .group-info p {
+    margin: 5px 0;
+    font-weight: bold;
+  }
+  
+  .btn-secondary {
+    display: inline-block;
+    padding: 8px 16px;
+    margin-top: 10px;
+    background-color: #aaa;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+  }
+  
+  .btn-secondary:hover {
+    opacity: 0.85;
+  }
+  
+  h2 {
+    font-size: 1.4em;
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  .member-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  .member-table th,
+  .member-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+  }
+  
+  .member-table th {
+    background-color: #fce4ec;
+    color: #cc3399;
+  }
+  
+  .btn-edit,
+  .btn-delete {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 0.9em;
+    margin-right: 5px;
+  }
+  
+  .btn-edit {
+    background-color: #3399cc;
+    color: white;
+  }
+  
+  .btn-delete {
+    background-color: #e74c3c;
+    color: white;
+  }
+  
+  .btn-edit:hover,
+  .btn-delete:hover {
+    opacity: 0.9;
+  }
+  
+  .btn-add {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #cc66cc;
+    color: white;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .btn-add:hover {
+    opacity: 0.9;
+  }
+  

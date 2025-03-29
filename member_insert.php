@@ -6,6 +6,7 @@ require_once('funcs.php');
 $group_id = $_POST['group_id'];
 $member_name = $_POST['member_name'];
 $content = $_POST['content'];
+$image_path = '';
 
 // 画像アップロードの処理
 $member_image = '';
@@ -62,7 +63,7 @@ if($status === false){
     exit('ErrorMessage:'.$error[2]);
   }else{
     //５．profile_edit.phpへリダイレクト
-    header('Location: index.php');
+    header('Location: member_list.php');
   
   }
 

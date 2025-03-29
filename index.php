@@ -1,151 +1,113 @@
-<?php
-session_start();
-require_once('funcs.php');
-
-//データベース接続
-$pdo = localdb_conn(); //ローカル環境
-
-
-//２．データ取得SQL作成
-$stmt = $pdo->prepare("SELECT * FROM idol_list_table");
-$status = $stmt->execute();
-
-//３．データ表示
-$view="";
-if ($status === false) {
-    //execute（SQL実行時にエラーがある場合）
-  $error = $stmt->errorInfo();
-  exit("ErrorQuery:".$error[2]);
-
-} else {
-  //Selectデータの数だけ自動でループしてくれる
-  //FETCH_ASSOC=http://php.net/manual/ja/pdostatement.fetch.php
-  //$stmt->fetch(PDO::FETCH_ASSOC)でデータベースの中身を全て取り出す
-  while( $result = $stmt->fetch(PDO::FETCH_ASSOC))
-  {
-    $view .= '<div id = "prcard">';
-    // $view .= '<a href="./comment_list.php">';    
-    $view .= '<a href="./comment_list.php?group_id=' . h($result['id']) . '">'; // グループIDをリンクに含める
-    $view .= '<p id = "group_name">';
-    $view .= h($result['group_name']);
-    $view .= '</p>';
-    $view .= '<img src="' . $result['group_image'] .'" id = group_image>';
-    $view .= '<a id = tubelink href = "';
-    $view .= h($result['official_site_url']);
-    $view .= '" target="_blank">OFFICIAL SITE</a>';
-    // $view .= '<p id = "comment_area">';
-    // $view .= h($result['content']);
-    // $view .= '</p>';
-    $view .= '</a>';
-    $view .= '</div>';
-  }
-}
-
-?>
-
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>アイドル一覧</title>
-    <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="css/style_index.css">
-    <!-- Slickのスタイルシート -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
-    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
-    <link rel="stylesheet" href="css/slick.css">
-    <!-- jquery指定 -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <!-- jsファイル指定、importを使用するためにはscript指定時に「type="module"」を入れないと動かない -->
-    <script type="module" src="js/registration.js"></script>
-    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-    <script src="js/slick.min.js"></script>
-    <script src="js/slick.js"></script>
+  <meta charset="UTF-8">
+  <title>LiveEcho - アイドル活動を応援するファンレターサービス</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/style_lp.css">
 </head>
-
 <body>
-        <!-- ヘッダー情報 -->
-    <!-- ヘッダー -->
-    <header>
-        <div class="title_area">
-            <div class="title">投げ銭ファンレター</div>
-            <div class="user_reg_area">
-              <?php if (isset($_SESSION['name'])): ?>
-                <span class="username"><?= htmlspecialchars($_SESSION['name'], ENT_QUOTES, 'UTF-8'); ?> さん</span>
-                <a class="logout_btn" href="./logout.php">ログアウト</a>
-              <?php else: ?>
-                <a class="login_btn" href="./login.php">ログイン</a>
-                <a class="userreg_btn" href="./user_reg.php">新規登録</a>
-              <?php endif; ?>
-            </div>
-        </div>
-        <!-- ハンバーガーメニュー -->
-        <input type="checkbox" class="menu-btn" id="menu-btn">
-        <label for="menu-btn" class="menu-icon">
-            <span class="navicon"></span>
-        </label>
-            <ul class="menu">
-                <li class="top"><a href="./user_reg.php">ユーザー登録</a></li>
-                <li><a href="./user_list.php">ユーザー一覧</a></li>
-                <li><a href="./login.php">ログイン</a></li>
-                <li><a href="./logout.php">ログアウト</a></li>
-                <li><a href="./index.php">アイドルグループ一覧</a></li>
-                <li><a href="./idol_reg.php">アイドルグループ登録</a></li>
-                <li><a href="./member_reg.php">メンバー登録</a></li>
-            </ul>
-    </header>
 
-    <main>
-    <!-- <div class=sidemenue>side_menue</div> -->
-    <!-- <div class=content> -->
-     <div class="toppic_area">
-      <img class="toppic" src="./pic/top2.jpg" alt="">
-      <h1 class="topname">投げ銭ファンレター</h1>
-      <div class="introduction">
-          「アイドルの夢を、ファンの力で支える。」<br>
-          ライブや楽曲活動ではなく、チェキ収入に依存する現状を変えたい。<br>
-          あなたの言葉と応援が、アイドルの未来をつくる「投げ銭ファンレター」サービス。</div>
-      </div>
+<!--ヘッダー  -->
+<header class="lp-header">
+  <div class="container header-container">
+    <h1 class="logo">LiveEcho</h1>
+    <div class="menu-icon" id="menu-icon">
+      <span></span>
+      <span></span>
+      <span></span>
     </div>
+    <nav class="nav" id="nav-menu">
+      <a href="#about" class="header_link">サービス概要</a>
+      <a href="#features" class="header_link">機能</a>
+      <a href="#cta" class="header_link">無料登録</a>
+      <a href="./login.php" class="login-btn">ログイン</a>
+    </nav>
+  </div>
+</header>
 
+<!--ヒーロー画像 -->
+<section class="hero">
+  <div class="hero-image">
+    <img src="img/hero_img.png" alt="ライブのヒーロービジュアル">
+    <div class="hero-text">
+      <h1>ライブの余韻を、ありがとうに。</h1>
+      <p>ファンの「今日最高だった」をカタチにして届ける。</p>
+      <a href="#cta" class="cta-btn">無料で始める</a>
+    </div>
+  </div>
+</section>
 
-  <!-- スライダー -->
-    <!-- <div class="section">
-      <h1>PICKUP GROUP</h1>
-      <div class="sliderArea">
-        <div class="full-screen slider">
-          <div><img src="./pic/1.jpg" alt="125naroom"></div>
-          <div><img src="./pic/2.jpg" alt="125naroom"></div>
-          <div><img src="./pic/3.jpg" alt="125naroom"></div>
-          <div><img src="./pic/4.jpg" alt="125naroom"></div>
-          <div><img src="./pic/5.jpg" alt="125naroom"></div>
-        </div>
+<!-- About -->
+<section id="about" class="about">
+  <div class="container">
+    <h2>LiveEchoとは？</h2>
+    <p>
+      ライブ後の感動を「投げ銭付きファンレター」に。<br>
+      地下アイドルや小規模グループがパフォーマンスで<br>
+      収益化できる、新しい応援のカタチを提供します。
+    </p>
+  </div>
+</section>
+
+<!-- Features -->
+<section id="features" class="features">
+  <div class="container">
+    <h2 class="section-title">主な機能</h2>
+    <div class="feature-grid">
+
+      <div class="feature-box">
+        <img src="img/feature_message.png" alt="ファンレター投稿">
+        <h3>ライブ後の感謝メッセージ投稿</h3>
+        <p>高まる気持ちをそのまま言葉で届ける。タイムライン形式で共感も広がります。</p>
       </div>
-    </div> -->
 
-    <!-- 表示部分 -->
-     <!-- <div> -->
-      <div class="profile_card_area"><?= $view ?></div>
-    <!-- </div> -->
-     </main>
-
-    <!-- フッター情報 -->
-    <footer>
-      <div class="footer_title">アイドル口コミプラットフォーム</div>
-      <div class="footer_menu">
-        <a class=footerlink href="./user_reg.php">ユーザー登録</a>
-        <a class=footerlink href="./user_list.php">ユーザー一覧</a>
-        <a class=footerlink href="./login.php">ログイン</a>
-        <a class=footerlink href="./logout.php">ログアウト</a>
-        <a class=footerlink href="./index.php">アイドルグループ一覧</a>
-        <a class=footerlink href="./idol_reg.php">アイドルグループ登録</a>
-        <a class=footerlink href="./member_reg.php">メンバー登録</a>
+      <div class="feature-box">
+        <img src="img/feature_manage.png" alt="イベント管理">
+        <h3>イベント・メンバー管理</h3>
+        <p>運営者が簡単にイベントやメンバー情報を管理可能。コメント入力や編集もスムーズに。</p>
       </div>
-     </footer>
 
-    </body>
+      <div class="feature-box">
+        <img src="img/feature_payment.png" alt="投げ銭決済">
+        <h3>投げ銭付きファンレター</h3>
+        <p>Stripe連携で投げ銭機能を実現。ライブの感動がそのまま収益に。</p>
+      </div>
 
+      <div class="feature-box">
+        <img src="img/feature_sns.png" alt="X連携">
+        <h3>SNS連携</h3>
+        <p>X（旧Twitter）へ自動投稿。感謝の言葉がハッシュタグ付きで広がります。</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Call to Action -->
+<section id="cta" class="cta">
+  <div class="container">
+    <h2>今すぐ無料で始めよう</h2>
+    <p class="end_message">アイドル活動を“感謝”と“収益”で支える新しい仕組み、<br>まずはあなたのグループから。</p>
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSe5eqdKArgdu7S9PcDEw49qnIhDm1aXi3uq35YuZ2pc9_RJ2A/viewform?usp=dialog" class="cta-btn">無料で始める</a>
+</div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <p>&copy; 2025 LiveEcho. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('menu-icon').addEventListener('click', function () {
+    this.classList.toggle('active');
+    document.getElementById('nav-menu').classList.toggle('open');
+  });
+</script>
+
+
+</body>
 </html>

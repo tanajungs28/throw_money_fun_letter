@@ -1,0 +1,145 @@
+.styled-table {
+    width: 90%;
+    margin: 30px auto;
+    border-collapse: collapse;
+    font-size: 16px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  }
+  
+  .styled-table thead tr {
+    background-color: #f06b9a;
+    color: #ffffff;
+    text-align: left;
+  }
+  
+  .styled-table th,
+  .styled-table td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+  }
+  
+  .styled-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .edit-link {
+    color: #007bff;
+    text-decoration: none;
+    margin-right: 10px;
+  }
+  
+  .delete-link {
+    color: #dc3545;
+    text-decoration: none;
+  }
+  .admin-edit-wrapper {
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 30px;
+    background: #fdfdfd;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.admin-edit-wrapper h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+.admin-edit-form .form-group {
+    margin-bottom: 20px;
+}
+
+.admin-edit-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #444;
+}
+
+.admin-edit-form select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #aaa;
+    font-size: 16px;
+}
+
+.form-actions {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.btn-submit {
+    background-color: #f06b9a;
+    color: white;
+    padding: 10px 30px;
+    font-size: 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-submit:hover {
+    background-color: #d85884;
+}
+
+
+/* イベント作成ページ */
+.form-wrapper {
+    max-width: 500px;
+    margin: 40px auto;
+    background-color: #f8f8f8;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+  }
+  
+  .form-title {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .form-item {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-item label {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .form-item input,
+  .form-item select {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+  }
+  
+  .button-panel {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .button {
+    background-color: #eb86b4;
+    border: none;
+    color: white;
+    padding: 10px 30px;
+    font-size: 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  
+  .button:hover {
+    background-color: #d675a2;
+  }
+  

@@ -1,3 +1,16 @@
+<?php
+if (!isset($_GET['member_id'])) {
+    $member_id = "";
+}else{
+    $member_id = $_GET['member_id'];
+}
+if (!isset($_GET['event_id'])) {
+    $event_id = "";
+}else{
+    $event_id = $_GET['event_id'];
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,19 +19,16 @@
     <title>ログイン</title>
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/style_login.css">
-    <link rel="stylesheet" href="css/style_profile.css">
+    <!-- <link rel="stylesheet" href="css/style_profile.css"> -->
 </head>
 <body>
 
         <!-- ヘッダー情報 -->
-        <header>
-     <button id = "back_btn">
-        <img src="pic/back.png" alt="" id = "btn_pic">
-     </button>
-     <div class="title_area">
-            <div class="title">ログイン画面</div>
+    <header class="lp-header">
+        <div class="container header-container">
+            <h1 class="logo">LiveEcho</h1>
         </div>
-     </header>
+    </header>
 
     <!-- ログイン部分 -->
     <div class="form-wrapper">
@@ -39,13 +49,19 @@
                 <p><a href="user_reg.php">Create an account</a></p>
                 <!-- <p><a href="#">Forgot password?</a></p> -->
             </div>
+            <input type="hidden" id = "member_id" name = "member_id" value = "<?= htmlspecialchars($member_id, ENT_QUOTES, 'UTF-8') ?>">
+            <input type="hidden" id = "event_id" name = "event_id" value = "<?= htmlspecialchars($event_id, ENT_QUOTES, 'UTF-8') ?>">
         </form>
     </div>
 
 
-    <footer>
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <p>&copy; 2025 LiveEcho. All rights reserved.</p>
+  </div>
+</footer>
 
-    </footer>
 
 <!-- jquery指定 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>

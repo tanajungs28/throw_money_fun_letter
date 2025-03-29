@@ -1,60 +1,204 @@
-#member_image_area{
-    height: 20%;
-    margin-top: 1%;
-    margin-bottom: 1%;
+/* 全体レイアウトの中央寄せ */
+.main-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
 }
 
-.image_name_block{
-    padding-top: 10px;
-    margin-right: auto;
-    margin-left: auto;
-    text-align: center;
+.content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.event-info,
+.form-section {
+    background: #fff5f8;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.event-info h2,
+.form-section h1 {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+    color: #d63384;
+}
+
+.event-info p,
+.form-section p {
+    font-size: 0.95em;
+    color: #444;
+    margin-bottom: 6px;
+}
+
+
+/* 画像と名前表示 */
+.image_name_block {
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    text-align: center;
 }
-
-#member_img{
+#member_img {
     width: 100px;
     height: 100px;
     border-radius: 50%;
+    object-fit: cover;
 }
-
-
-.member_name{
-    padding-top: 40px;
-    padding-bottom: 40px;
-    padding-left: 50px;
-    font-size: 30px;
-    color: gray;
-}
-
-.messeage_title{
-    text-align: center;
-    margin-top: 10px;
-}
-
-#comment{
-    height: 100px;
-}
-
-.throw_money_area{
-    text-align: center;
-    padding: 0.5em 1em;
-    margin: 2em auto;
+.member_name {
+    margin-top: 15px;
+    font-size: 28px;
     font-weight: bold;
-    color: #6091d3;/*文字色*/
-    background: #FFF;
-    border: solid 3px #6091d3;/*線*/
-    border-radius: 10px;/*角の丸み*/
-    width: 50%;
+    color: #555;
 }
 
+/* イベント情報カード */
+.event-info {
+    background: #fff5f8;
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+}
+.event-info h2 {
+    font-size: 1.2em;
+    margin-bottom: 15px;
+    color: #d63384;
+}
+.event-info p {
+    margin: 5px 0;
+    font-size: 0.95em;
+    color: #444;
+}
+
+/* アイコン追加（オプション） */
+.event-info p::before {
+    margin-right: 8px;
+    color: #d63384;
+}
+
+/* .event-info p:nth-child(2)::before { content: "🎤"; } */
+/* .event-info p:nth-child(3)::before { content: "📅"; } */
+/* .event-info p:nth-child(4)::before { content: "#"; } */
+/* .event-info p:nth-child(5)::before { content: "💬"; } */
+
+/* フォーム全体 */
+.form-section {
+    background: #f9f9ff;
+    border: 1px solid #ccc;
+    padding: 25px;
+    border-radius: 10px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+.form-section h1 {
+    font-size: 1.2em;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+/* 各フォーム入力要素 */
+.form-section input[type="text"],
+.form-section textarea,
+.form-section select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 8px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 1em;
+}
+.form-section input[type="range"] {
+    width: 100%;
+}
+
+/* 投げ銭の囲み */
+.throw_money_area {
+    text-align: center;
+    padding: 1em;
+    font-weight: bold;
+    color: #6091d3;
+    background: #fff;
+    border: 2px dashed #6091d3;
+    border-radius: 10px;
+    margin: 1.5em 0;
+}
+/* 投げ銭実施選択 */
+.switch-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 20px 0;
+  }
+  
+  .switch-label {
+    font-weight: bold;
+    color: #333;
+  }
+  
+  /* スライドスイッチ本体 */
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 28px;
+  }
+  
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    background-color: #ccc;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    transition: 0.4s;
+    border-radius: 34px;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    background-color: white;
+    left: 4px;
+    bottom: 4px;
+    transition: 0.4s;
+    border-radius: 50%;
+  }
+  
+  input:checked + .slider {
+    background-color: #4CAF50;
+  }
+  
+  input:checked + .slider:before {
+    transform: translateX(22px);
+  }
+  
+
+/* プルダウンセレクト */
 .selectbox-5 {
     display: inline-flex;
     align-items: center;
     position: relative;
     margin-bottom: 20px;
+    width: 100%;
 }
-
 .selectbox-5::after {
     position: absolute;
     right: 15px;
@@ -65,62 +209,107 @@
     content: '';
     pointer-events: none;
 }
-
 .selectbox-5 select {
     appearance: none;
-    min-width: 230px;
+    width: 100%;
     height: 2.8em;
     padding: .4em calc(.8em + 30px) .4em .8em;
     border: none;
     border-bottom: 2px solid #d0d0d0;
     background-color: #fff;
-    color: #333333;
+    color: #333;
     font-size: 1em;
-    cursor: pointer;
 }
 
-.selectbox-5 select:focus {
-    outline: none;
-}
-
+/* 送信ボタン */
 #send_btn_area {
-    /* margin-left: 40%; */
+    text-align: center;
+    margin-top: 20px;
 }
-
-
 .send_btn {
-    width: 30%;
-    background: #eee;
+    background: #e75480;
+    color: white;
+    border: none;
     border-radius: 9999px;
-    justify-content: space-around;
-    align-items: center;
-    margin: 0 auto;
-    max-width: 250px;
-    padding: 10px 25px;
-    font-family: "Noto Sans Japanese";
-    color: #333333;
-    line-height: 1.8;
-    text-decoration: none;
-    transition: 0.3s ease-in-out;
-    font-weight: 500;
+    padding: 12px 30px;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease;
 }
 .send_btn:hover {
-    background: #333333;
-    color: #FFF;
+    background: #c93d6d;
 }
-.send_btn:after {
-    content: '';
-    width: 5px;
-    height: 5px;
-    border-top: 3px solid #333333;
-    border-right: 3px solid #333333;
-    transform: rotate(45deg) translateY(-50%);
-    /* position: absolute; */
-    top: 50%;
-    right: 20px;
-    border-radius: 1px;
-    transition: 0.3s ease-in-out;
+
+/* タイムライン表示 */
+#timeline {
+    margin-top: 40px;
+    max-height: 400px;
+    overflow-y: auto;
+    padding-right: 10px;
 }
-.send_btn:hover:after {
-    border-color: #FFF;
+#timeline .tweet-card {
+    background-color: #fff0f5;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+#timeline .tweet-content {
+    font-size: 0.95em;
+    color: #333;
+    margin-bottom: 8px;
+}
+#timeline .tweet-time {
+    font-size: 0.85em;
+    color: #666;
+}
+
+/* ミートボールメニュー（管理者向け） */
+.meatball {
+    background: none;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    float: right;
+    margin-top: -10px;
+}
+.meatball-ball {
+    width: 4px;
+    height: 4px;
+    background: #555;
+    border-radius: 50%;
+    display: block;
+    margin: 3px auto;
+}
+.menu-container {
+    position: relative;
+}
+.submenu {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 20px;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    z-index: 10;
+}
+.meatball:hover + .menu-container .submenu {
+    display: block;
+}
+.submenu ul {
+    list-style: none;
+    margin: 0;
+    padding: 5px 10px;
+}
+.submenu ul li {
+    padding: 5px 0;
+}
+.submenu ul li a {
+    text-decoration: none;
+    color: #333;
+}
+.submenu ul li a:hover {
+    color: #e75480;
 }

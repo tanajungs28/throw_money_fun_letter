@@ -7,4 +7,6 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Stripe\\' => array($vendorDir . '/stripe/stripe-php/lib'),
+    'Composer\\CaBundle\\' => array($vendorDir . '/composer/ca-bundle/src'),
+    'Abraham\\TwitterOAuth\\' => array($vendorDir . '/abraham/twitteroauth/src'),
 );

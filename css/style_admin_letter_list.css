@@ -1,0 +1,137 @@
+/* 共通コンテナ設定 */
+.container {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #fffdfd;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  }
+  
+  /* タイトル */
+  h1 {
+    text-align: center;
+    color: #d63384;
+    margin-bottom: 30px;
+  }
+  
+  /* テーブル */
+  .letter-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 30px;
+    font-size: 0.95rem;
+  }
+  
+  .letter-table th, .letter-table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+  }
+  
+  .letter-table th {
+    background-color: #fce4ec;
+    color: #444;
+    font-weight: bold;
+  }
+  
+  .letter-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .letter-table tr:hover {
+    background-color: #fff0f5;
+  }
+  
+  /* メッセージ欄を折りたたみ表示 */
+  .message-content {
+    max-height: 80px;
+    overflow-y: auto;
+    font-size: 0.95em;
+    line-height: 1.4;
+  }
+  
+  /* アクションリンク */
+  .action-links a {
+    display: inline-block;
+    margin-right: 10px;
+    padding: 6px 12px;
+    background-color: #cc66cc;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 0.85em;
+    transition: background-color 0.2s ease-in-out;
+  }
+  
+  .action-links a:hover {
+    background-color: #b94bb7;
+  }
+  
+  .action-links a.delete {
+    background-color: #e74c3c;
+  }
+  
+  .action-links a.delete:hover {
+    background-color: #c0392b;
+  }
+  
+  /* ステータス表示 */
+  .status-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 0.8em;
+    color: white;
+  }
+  
+  .status-open {
+    background-color: #28a745;
+  }
+  
+  .status-closed {
+    background-color: #6c757d;
+  }
+  
+  .status-pending {
+    background-color: #ffc107;
+    color: #333;
+  }
+  
+  /* 投げ銭表示 */
+  .tip-amount {
+    font-weight: bold;
+    color: #d63384;
+  }
+
+  .btn-delete {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    font-size: 0.85rem;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .btn-delete:hover {
+    opacity: 0.85;
+  }
+  
+  
+  /* レスポンシブ対応 */
+  @media (max-width: 768px) {
+    .letter-table {
+      font-size: 0.85rem;
+    }
+  
+    .letter-table th,
+    .letter-table td {
+      padding: 8px;
+    }
+  
+    .action-links a {
+      margin-bottom: 5px;
+    }
+  }
+  

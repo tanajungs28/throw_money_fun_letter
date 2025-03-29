@@ -1,0 +1,108 @@
+.container {
+    max-width: 1000px;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  
+  h1 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #333;
+  }
+  
+  .event-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .event-table thead {
+    background-color: #f8e8f0;
+  }
+  
+  .event-table th,
+  .event-table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: center;
+    font-size: 0.95rem;
+  }
+  
+  .event-table th {
+    background-color: #ffe6f0;
+    color: #cc0066;
+  }
+  
+  .event-table td {
+    background-color: #fff;
+  }
+  
+  .event-table tr:hover {
+    background-color: #fff5f9;
+  }
+  
+  .action-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+  }
+  
+  .action-buttons a {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    text-decoration: none;
+    color: #fff;
+    transition: background-color 0.2s;
+  }
+  
+  .action-buttons .edit {
+    background-color: #4caf50;
+  }
+  
+  .action-buttons .delete {
+    background-color: #e74c3c;
+  }
+  
+  .action-buttons .manage {
+    background-color: #3498db;
+  }
+  
+  .action-buttons a:hover {
+    opacity: 0.85;
+  }
+  
+  .btn-add {
+    display: inline-block;
+    margin-top: 25px;
+    padding: 10px 20px;
+    background-color: #cc66cc;
+    color: white;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .btn-add:hover {
+    opacity: 0.85;
+  }
+  
+  /* モバイル対応 */
+  @media (max-width: 768px) {
+    .event-table th,
+    .event-table td {
+      font-size: 0.85rem;
+      padding: 8px;
+    }
+  
+    .action-buttons {
+      flex-direction: column;
+      gap: 5px;
+    }
+  }
+  
